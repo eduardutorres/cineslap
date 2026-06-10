@@ -1,128 +1,167 @@
-# CineSlap - Plataforma de Crítica Interativa
+CineSlap 🎬👋
 
-O **CineSlap** é uma plataforma voltada para o gerenciamento, catalogação e avaliação colaborativa de produções cinematográficas e televisivas. O sistema permite que os usuários cadastrem, pesquisem e acompanhem avaliações de filmes e séries de forma organizada e intuitiva.
+O CineSlap é uma plataforma social voltada para amantes de filmes e séries, permitindo que os usuários descubram conteúdos, publiquem críticas, compartilhem opiniões e interajam com outros membros da comunidade.
 
-Este projeto foi desenvolvido como requisito acadêmico para a disciplina de **Programação Orientada a Objetos (POO)**.
+A aplicação integra informações em tempo real do catálogo do TMDB, possibilitando a busca e visualização de filmes e séries, além de permitir a criação de avaliações personalizadas acompanhadas de GIFs e imagens.
 
----
+Este projeto foi desenvolvido utilizando conceitos de Programação Orientada a Objetos (POO) e seguindo a arquitetura MVC (Model-View-Controller).
 
-# Arquitetura e Tecnologias
+Arquitetura do Projeto
 
-A aplicação foi desenvolvida seguindo o padrão arquitetural **MVC (Model-View-Controller)**, sendo organizada nas seguintes camadas:
+A aplicação está organizada em camadas para garantir maior organização, manutenção e escalabilidade.
 
-## View (`app.py`)
+View (app.py)
 
-Interface gráfica desenvolvida com o framework **Streamlit**, responsável pela renderização das páginas e pela interação com o usuário.
+Responsável pela interface gráfica da aplicação.
 
-## Controller (`controllers.py`)
+Desenvolvida com Streamlit, oferece uma experiência moderna e intuitiva para:
 
-Camada responsável pela validação de dados, gerenciamento do estado da aplicação e coordenação das operações entre a interface e as regras de negócio.
+Login e cadastro de usuários;
+Navegação pelo catálogo;
+Visualização de perfis;
+Publicação de avaliações;
+Interação com conteúdos da comunidade.
+Controller (controllers/controllers.py)
 
-## Model (`models.py`)
+Camada intermediária responsável por:
 
-Camada de modelagem de dados, implementada por meio de classes baseadas em **dataclasses**, que representam as entidades do sistema.
+Controle de fluxo da aplicação;
+Validação de dados;
+Gerenciamento das sessões do usuário;
+Coordenação entre interface, banco de dados e serviços externos.
+Model (models/)
 
-## Service (`services.py`)
+Contém as classes que representam as entidades do sistema, como:
 
-Camada de serviços responsável pela integração com APIs externas e pelo isolamento das regras de comunicação com sistemas terceiros.
+Usuário;
+Filme;
+Série;
+Avaliação (Slap Review).
+Data (data/)
 
----
+Camada responsável pela persistência dos dados.
 
-# Integrações e Persistência
+Inclui:
 
-## The Movie Database (TMDB) API
+Conexão com banco MySQL;
+Repositórios de usuários;
+Repositórios de avaliações.
+Services (services/services.py)
 
-Utilizada para alimentar o catálogo de filmes e séries por meio de consultas aos endpoints de busca da plataforma.
+Responsável pela integração com APIs externas.
 
-## Giphy API
+Atualmente o sistema utiliza:
 
-Utilizada para associar GIFs às avaliações e críticas realizadas pelos usuários.
+TMDB API (The Movie Database);
+Giphy API.
+Tecnologias Utilizadas
+Python 3
+Streamlit
+MySQL
+Requests
+Python Dotenv
+Dataclasses
+Arquitetura MVC
+Integrações Externas
+TMDB API
 
-## MySQL
+Utilizada para:
 
-Banco de dados relacional utilizado para garantir a persistência, integridade e consistência dos dados armazenados.
+Buscar filmes;
+Buscar séries;
+Obter detalhes completos dos conteúdos;
+Exibir filmes em cartaz;
+Exibir séries populares.
+Giphy API
 
----
+Utilizada para:
 
-# Estrutura do Projeto
+Buscar GIFs relacionados às avaliações;
+Tornar as críticas mais dinâmicas e interativas.
+Banco de Dados
 
-```text
-├── controllers/       # Controladores e regras de negócio
-├── data/              # Scripts SQL e arquivos relacionados ao banco de dados
-├── models/            # Definição das entidades e modelos de dados
-├── services/          # Integração com APIs externas
-├── app.py             # Arquivo principal da aplicação (View)
-└── README.md          # Documentação do projeto
-```
+O sistema utiliza o MySQL como banco de dados principal para armazenar:
 
----
+Usuários;
+Perfis;
+Avaliações;
+Relacionamentos entre conteúdos e usuários.
 
-# Como Executar o Projeto
+O script de criação da estrutura encontra-se em:
 
-## 1. Clonar o Repositório
-
-```bash
-git clone <URL_DO_REPOSITORIO>
-cd CineSlap
-```
-
----
-
-## 2. Instalar as Dependências
-
-Instale as bibliotecas necessárias utilizando o comando abaixo:
-
-```bash
-pip install streamlit requests mysql-connector-python
-```
-
-Ou, caso exista um arquivo `requirements.txt`:
-
-```bash
+banco de dados.sql
+Estrutura do Projeto
+CineSlap
+│
+├── app.py
+│
+├── controllers/
+│   ├── controllers.py
+│
+├── models/
+│   ├── filme.py
+│   ├── serie.py
+│   ├── slap_review.py
+│   ├── usario.py
+│   └── models.py
+│
+├── data/
+│   ├── database.py
+│   ├── review_repository.py
+│   └── usario_repository.py
+│
+├── services/
+│   └── services.py
+│
+├── banco de dados.sql
+├── .env
+└── README.md
+Configuração do Ambiente
+1. Clonar o Repositório
+git clone https://github.com/eduardutorres/cineslap.git
+cd cineslap
+2. Instalar Dependências
 pip install -r requirements.txt
-```
 
----
+Ou:
 
-## 3. Configurar o Banco de Dados e as APIs
+pip install streamlit requests mysql-connector-python python-dotenv
+3. Configurar Variáveis de Ambiente
 
-1. Certifique-se de que o serviço do **MySQL** esteja em execução.
-2. Execute os scripts SQL presentes na pasta `data/` para criar a estrutura do banco de dados.
-3. Configure as chaves de acesso (API Keys) da **TMDB API** e da **Giphy API** conforme definido no projeto.
-4. Verifique se as credenciais de conexão com o banco de dados estão configuradas corretamente.
+Crie um arquivo .env na raiz do projeto:
 
----
-
-## 4. Executar a Aplicação
-
-Após concluir as etapas de configuração, inicie a aplicação com o seguinte comando:
-
-```bash
+TMDB_BEARER_TOKEN=SEU_TOKEN_TMDB
+GIPHY_API_KEY=SUA_CHAVE_GIPHY
+4. Configurar o Banco de Dados
+Inicie o MySQL.
+Execute o script:
+banco de dados.sql
+Verifique as configurações de conexão em:
+data/database.py
+5. Executar o Projeto
 streamlit run app.py
-```
+Funcionalidades
 
----
+✅ Cadastro de usuários
 
-# Acessando a Aplicação
+✅ Login e autenticação
 
-Após a execução, o Streamlit iniciará um servidor local e exibirá um endereço semelhante ao abaixo:
+✅ Edição de perfil
 
-```text
-http://localhost:8501
-```
+✅ Upload de foto de perfil
 
-Abra esse endereço em seu navegador para acessar o sistema.
+✅ Busca de filmes
 
----
+✅ Busca de séries
 
-# Funcionalidades
+✅ Visualização de detalhes dos conteúdos
 
-* Cadastro e gerenciamento de avaliações de filmes e séries;
-* Pesquisa de conteúdos por meio da API do TMDB;
-* Associação de GIFs às avaliações utilizando a API do Giphy;
-* Armazenamento persistente de dados em banco MySQL;
-* Interface web interativa desenvolvida com Streamlit;
-* Organização do código seguindo o padrão MVC.
+✅ Publicação de críticas e avaliações
 
+✅ Integração com GIFs do Giphy
 
+✅ Catálogo atualizado via TMDB
 
+✅ Persistência em banco MySQL
+
+✅ Interface moderna desenvolvida com Streamlit
